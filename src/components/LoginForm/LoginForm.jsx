@@ -1,15 +1,34 @@
 import React from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import * as yup from "yup";
 
 import css from "./LoginForm.module.css";
 import LogoEmail from "../../images/LogoEmail.png";
 import LogoPassword from "../../images/LogoPassword.png";
 import Logo from "../../images/Logo.png";
+import { Link } from "react-router-dom";
+
+const validationSchema = yup.object({
+  email: yup
+    .string()
+    .email("Invalid email adress")
+    .required("Email adress is required"),
+  password: yup
+    .string()
+    .min(6, "Password must be at least 6 characters")
+    .max(12, "Password can have up to 12 characters")
+    .required("Password is required"),
+});
 
 const LoginForm = () => {
+  const handleSubmit = () =>{}
   return (
-    <Formik initialValues={{ email: "", password: "" }}>
-      <Form className={css.loginFormContainer}>
+    <Formik
+      initialValues={{ email: "", password: "" }}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
+    >
+      <Form className={css.loginFormContainer} autoComplete="off">
         <img className={css.logoSvg} src={Logo} alt="wallet icon" />
         <div className={css.inputContainer}>
           <img className={css.inputIcon} src={LogoEmail} alt="Email icon" />
@@ -29,12 +48,14 @@ const LoginForm = () => {
           <button className={`${css.button} ${css.loginButton}`} type="submit">
             LOG IN
           </button>
-          <button
-            className={`${css.button} ${css.registrationButton}`}
-            type="submit"
-          >
-            REGISTER
-          </button>
+          <Link to="/register">
+            <button
+              className={`${css.button} ${css.registrationButton}`}
+              type="submit"
+            >
+              REGISTER
+            </button>
+          </Link>
         </div>
       </Form>
     </Formik>

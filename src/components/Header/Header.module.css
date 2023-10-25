@@ -1,0 +1,38 @@
+.header {
+  background-color: #fff;
+  padding: 15px 20px 15px 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.headerLogo {
+
+}
+.headerUser {
+    display: flex;
+    gap: 8px;
+}
+.userName {
+  font-family: "Circe";
+  font-size: 18px;
+  color: #BDBDBD;
+}
+.exitBtn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  font-family: Circe;
+  font-size: 18px;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  color: #bdbdbd;
+  transition: color 150ms;
+  cursor: pointer;
+}
+.exitBtn__icon {
+  transition: fill 150ms;
+  fill: #bdbdbd;
+}
