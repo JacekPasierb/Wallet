@@ -1,0 +1,27 @@
+.balanceBox {
+
+  background: #fff;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 11,8px;
+  justify-items: center;
+  align-items: center;
+  margin-top: 12px;
+  margin-bottom: 32px;
+  padding: 8px;
+}
+
+.headerVisibility {
+  display: flex;
+  color: #A6A6A6;
+  font-size: 12px;
+}
+
+.balanceBox__content {
+  display: flex;
+  flex-direction: row;
+  
+  font-size: 30px;
+  font-weight: bold;
+}
