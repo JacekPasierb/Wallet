@@ -3,8 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     operations: [{
         id: 1,
-        value: 100,
-        category:"Car",
+        date: "20.04.2012",
+        type: "expense",
+        sum: 100,
+        category: "Car",
+        comment:"",
     }],
 }
 
