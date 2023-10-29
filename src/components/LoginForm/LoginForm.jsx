@@ -6,7 +6,10 @@ import css from "./LoginForm.module.css";
 import LogoEmail from "../../images/LogoEmail.png";
 import LogoPassword from "../../images/LogoPassword.png";
 import Logo from "../../images/Logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logIn } from "../../redux/auth/operations";
+import { selectError } from "../../redux/auth/selectors";
 
 const validationSchema = yup.object({
   email: yup
@@ -21,7 +24,22 @@ const validationSchema = yup.object({
 });
 
 const LoginForm = () => {
-  const handleSubmit = () =>{}
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleSubmit = async (values) => {
+     
+      try {
+        const result = await dispatch(logIn(values));
+ 
+        if (logIn.fulfilled.match(result)) {
+          console.log("hello", result);
+          navigate("/home");
+        }
+      } catch (err) {
+        console.error(err.message);
+        dispatch(selectError("Login failed ⚠"));
+      }
+    };
   return (
     <Formik
       initialValues={{ email: "", password: "" }}
