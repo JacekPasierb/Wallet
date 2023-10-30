@@ -7,23 +7,33 @@ import transactionsOperations from "../../redux/transactions/transactionsOperati
 import { selectTransactions } from "../../redux/transactions/transactionsSelectors";
 import { setTransactions } from "../../redux/transactions/transactionsSlice";
 import { TransactionPagination } from "../../components/RegistrationForm/Pagination/Pagination";
+import { setIsModalAddTransactionOpen } from "../../redux/global/globalSlice";
+import { selectIsModalAddTransactionOpen } from "../../redux/global/globalSelectors";
+import ModalAddTransaction from "../../components/ModalAddTransaction/ModalAddTransaction";
 
 const HomePage = () => {
   const dispatch = useDispatch();
-
   const transactionsAll = useSelector(selectTransactions);
-  console.log(transactionsAll);
+  const isModalAddTransactionOpen = useSelector(
+    selectIsModalAddTransactionOpen
+  );
+  useEffect(() => {
+     if (!isModalAddTransactionOpen) {
+       dispatch(transactionsOperations.getTransactions({ page: 1 }));
+     }
+  }, [isModalAddTransactionOpen]);
+
   return (
     <>
       <ButtonAddTransaction />
-
+      {isModalAddTransactionOpen && <ModalAddTransaction />}
       {transactionsAll.length === 0 && (
         <p> You haven`t made any transactions yet</p>
       )}
       {transactionsAll.length > 0 &&
-        transactionsAll.map(({ id, date, income, category, comment, sum }) => (
+        transactionsAll.map(({ _id, date, income, category, comment, sum }) => (
           <table
-            key={id}
+            key={_id}
             className={`${css.transactionTable} ${
               income ? css.income : css.expens
             }`}
@@ -66,7 +76,7 @@ const HomePage = () => {
             </tbody>
           </table>
         ))}
-      <TransactionPagination/>
+      {/* <TransactionPagination/> */}
     </>
   );
 };

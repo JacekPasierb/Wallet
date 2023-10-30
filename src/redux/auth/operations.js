@@ -34,11 +34,18 @@ export const logIn = createAsyncThunk(
   "auth/logIn",
   async (credentials, thunkAPI) => {
     try {
+      console.log("credentials", credentials);
       const resp = await axios.post("/api/users/login", credentials);
+      console.log("response - co wraca z serwera", resp);
       const { token, user } = resp.data.data;
+      console.log("token", token);
+       console.log("user", user);
       if (resp.status === 200) {
+        console.log("warunek: status jest 200");
         thunkAPI.dispatch(setAuthSuccess({ token, user }));
+        console.log("Zmieniamy stan auth na danego uzytkownika");
         setAuthHeader(token);
+        console.log("Do LoginForm zwracam resp.data.data",resp.data.data);
         return await resp.data.data;
       } else {
         console.error("Logowanie nie powiodło się");

@@ -28,10 +28,11 @@ const LoginForm = () => {
   const navigate = useNavigate();
     const error = useSelector((state) => state.auth.error);
   const handleSubmit = async (values) => {
-     
+     console.log(values);
       try {
         const result = await dispatch(logIn(values));
- 
+        console.log("Sprawdzam czy faktycznie wróciło", result);
+        console.log("logIn",logIn);
         if (logIn.fulfilled.match(result)) {
           
           navigate("/home");
