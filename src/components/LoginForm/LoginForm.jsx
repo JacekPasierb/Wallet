@@ -7,7 +7,7 @@ import LogoEmail from "../../images/LogoEmail.png";
 import LogoPassword from "../../images/LogoPassword.png";
 import Logo from "../../images/Logo.png";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logIn } from "../../redux/auth/operations";
 import { selectError } from "../../redux/auth/selectors";
 
@@ -26,13 +26,14 @@ const validationSchema = yup.object({
 const LoginForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+    const error = useSelector((state) => state.auth.error);
   const handleSubmit = async (values) => {
      
       try {
         const result = await dispatch(logIn(values));
  
         if (logIn.fulfilled.match(result)) {
-          console.log("hello", result);
+          
           navigate("/home");
         }
       } catch (err) {
@@ -50,7 +51,12 @@ const LoginForm = () => {
         <img className={css.logoSvg} src={Logo} alt="wallet icon" />
         <div className={css.inputContainer}>
           <img className={css.inputIcon} src={LogoEmail} alt="Email icon" />
-          <Field type="email" name="email" placeholder="E-mail" />
+          <Field
+            type="email"
+            name="email"
+            placeholder="E-mail"
+            autoComplete="false"
+          />
           <ErrorMessage name="email" component="div" />
         </div>
         <div className={css.inputContainer}>
@@ -59,7 +65,12 @@ const LoginForm = () => {
             src={LogoPassword}
             alt="Password icon"
           />
-          <Field type="password" name="password" placeholder="Password" />
+          <Field
+            type="password"
+            name="password"
+            placeholder="Password"
+            autoComplete="false"
+          />
           <ErrorMessage name="password" component="div" />
         </div>
         <div className={css.buttonContainer}>
@@ -74,6 +85,7 @@ const LoginForm = () => {
               REGISTER
             </button>
           </Link>
+          {error && <div className={css.error}>{error}</div>}
         </div>
       </Form>
     </Formik>

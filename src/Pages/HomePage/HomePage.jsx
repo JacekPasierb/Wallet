@@ -1,11 +1,18 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { transactions } from "../../redux/transactionsSelector";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import css from "./HomePage.module.css";
 import ButtonAddTransaction from "../../components/ButtonAddTransaction/ButtonAddTransaction";
+import transactionsOperations from "../../redux/transactions/transactionsOperations";
+import { selectTransactions } from "../../redux/transactions/transactionsSelectors";
+import { setTransactions } from "../../redux/transactions/transactionsSlice";
+import { TransactionPagination } from "../../components/RegistrationForm/Pagination/Pagination";
 
 const HomePage = () => {
-  const transactionsAll = useSelector(transactions);
+  const dispatch = useDispatch();
+
+  const transactionsAll = useSelector(selectTransactions);
+  console.log(transactionsAll);
   return (
     <>
       <ButtonAddTransaction />
@@ -59,6 +66,7 @@ const HomePage = () => {
             </tbody>
           </table>
         ))}
+      <TransactionPagination/>
     </>
   );
 };
